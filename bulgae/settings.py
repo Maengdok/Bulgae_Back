@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'hanja.apps.HanjaConfig',
     'korean.apps.KoreanConfig',
     'hanja_korean.apps.HanjaKoreanConfig',

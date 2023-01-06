@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'hanja_english.apps.HanjaEnglishConfig',
     'french.apps.FrenchConfig',
     'hanja_french.apps.HanjaFrenchConfig',
+    'hanja_association.apps.HanjaAssociationConfig',
 ]
 
 MIDDLEWARE = [

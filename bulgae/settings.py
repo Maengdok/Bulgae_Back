@@ -146,3 +146,30 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}
+
+# Constants
+HTTP_CONSTANTS = {
+    'SUCCESS': 200,
+    'CREATED': 201,
+    'BAD_REQUEST': 400,
+    'UNAUTHENTICATED': 401,
+    'FORBIDDEN': 403,
+    'NOT_FOUND': 404,
+    'NOT_ALLOWED': 405,
+    'INTERNAL_SERVER_ERROR': 500,
+}
+
+ROLES = {
+    'ROLE_USER': 1,
+    'ROLE_ADMIN': 2,
+    'ROLE_SUPER_ADMIN': 3,
+    'ROLE_ORGANIZATION_OWNER': 4,
+    'ROLE_ORGANIZATION_CO_OWNER': 5,
+    'ROLE_ORGANIZATION_MEMBER': 6,
+    'ROLE_TEAM_LEADER': 7,
+    'ROLE_TEAM_MEMBER': 8,
+}

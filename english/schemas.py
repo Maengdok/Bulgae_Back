@@ -120,7 +120,7 @@ def update_english_schema():
 
 def delete_english_schema():
     return {
-        200: openapi.Response('English updated successfully.', EnglishSerializer),
+        200: openapi.Response('English deleted successfully.', EnglishSerializer(many=True)),
         404: openapi.Response(
             description='Returns an error when not found.',
             examples=

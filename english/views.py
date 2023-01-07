@@ -1,9 +1,12 @@
 import json
 from django.conf import settings
+from django.http import HttpResponse
 
 from rest_framework.decorators import api_view, schema, action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import JSONParser
 from drf_yasg.utils import swagger_auto_schema
 
 from services.json_response import json_normalizer
@@ -14,8 +17,7 @@ from .schemas import get_english_schema, get_english_list_schema, add_english_sc
 
 
 class EnglishViewSet(ViewSet):
-    def __init__(self):
-        self.status = settings.HTTP_CONSTANTS['SUCCESS']
+    status = settings.HTTP_CONSTANTS['SUCCESS']
 
     @swagger_auto_schema(methods=['GET'], tags=['English'], operation_description="Get english", responses=get_english_list_schema())
     @api_view(['GET'])
@@ -23,7 +25,7 @@ class EnglishViewSet(ViewSet):
         queryset = English.objects.all()
         serializer = EnglishSerializer(queryset, many=True)
         response = json_normalizer(data=serializer.data)
-        return Response(response, status=self.status)
+        return Response(response, status=EnglishViewSet.status)
 
     @swagger_auto_schema(methods=['GET'], tags=['English'], operation_description="Get english", responses=get_english_schema())
     @api_view(['GET'])
@@ -34,8 +36,8 @@ class EnglishViewSet(ViewSet):
             response = json_normalizer(data=serializer.data)
         except English.DoesNotExist:
             response = json_normalizer(code='NOT_FOUND', result='Not found', message='English not found.')
-            self.status = settings.HTTP_CONSTANTS['NOT_FOUND']
-        return Response(response, status=self.status)
+            EnglishViewSet.status = settings.HTTP_CONSTANTS['NOT_FOUND']
+        return Response(response, status=EnglishViewSet.status)
 
     @swagger_auto_schema(
         methods=['POST'],
@@ -43,10 +45,11 @@ class EnglishViewSet(ViewSet):
         operation_description="Add english",
         responses=add_english_schema()
     )
+    @parser_classes([JSONParser])
     @api_view(['POST'])
-    def add_english(self, request):
-        decode = request.body.decode('utf-8')
-        serializer = EnglishSerializer(data=decode)
+    def add_english(self):
+        data = self.data
+        serializer = EnglishSerializer(data=data)
 
         if not serializer.is_valid():
             response = json_normalizer(
@@ -54,12 +57,12 @@ class EnglishViewSet(ViewSet):
                 result='Form is not valid.',
                 message=serializer.errors
             )
-            self.status = settings.HTTP_CONSTANTS['INTERNAL_SERVER_ERROR']
-            return Response(response, status=self.status)
+            EnglishViewSet.status = settings.HTTP_CONSTANTS['INTERNAL_SERVER_ERROR']
+            return Response(response, status=EnglishViewSet.status)
 
         serializer.save()
         response = json_normalizer(message='English created successfully.', data=serializer.data)
-        return Response(response, status=self.status)
+        return Response(response, status=EnglishViewSet.status)
 
     @swagger_auto_schema(
         methods=['PUT'],
@@ -68,13 +71,11 @@ class EnglishViewSet(ViewSet):
         responses=update_english_schema()
     )
     @api_view(['PUT'])
-    def update_english(self, request):
-        decode = request.body.decode('utf-8')
-        content = json.loads(decode)
-
+    def update_english(self):
+        data = self.data
         try:
-            english = English.objects.get(pk=content['id'])
-            serializer = EnglishSerializer(english, data=decode)
+            english = English.objects.get(pk=data['id'])
+            serializer = EnglishSerializer(english, data=data, partial=True)
 
             if not serializer.is_valid():
                 response = json_normalizer(
@@ -82,16 +83,16 @@ class EnglishViewSet(ViewSet):
                     result='Form is not valid.',
                     message=serializer.errors
                 )
-                self.status = settings.HTTP_CONSTANTS['INTERNAL_SERVER_ERROR']
-                return Response(response, status=self.status)
+                EnglishViewSet.status = settings.HTTP_CONSTANTS['INTERNAL_SERVER_ERROR']
+                return Response(response, status=EnglishViewSet.status)
 
             serializer.save()
             response = json_normalizer(message='English updated successfully.', data=serializer.data)
         except English.DoesNotExist:
             response = json_normalizer(code='NOT_FOUND', result='Not found', message='English not found.')
-            self.status = settings.HTTP_CONSTANTS['NOT_FOUND']
+            EnglishViewSet.status = settings.HTTP_CONSTANTS['NOT_FOUND']
 
-        return Response(response, status=self.status)
+        return Response(response, status=EnglishViewSet.status)
 
     @swagger_auto_schema(
         methods=['DELETE'],
@@ -104,9 +105,12 @@ class EnglishViewSet(ViewSet):
         try:
             english = English.objects.get(pk=english_id)
             english.delete()
-            response = json_normalizer(message='English deleted successfully.')
+
+            queryset = English.objects.all()
+            serializer = EnglishSerializer(queryset, many=True)
+            response = json_normalizer(message='English deleted successfully.', data=serializer.data)
         except English.DoesNotExist:
             response = json_normalizer(code='NOT_FOUND', result='Not found', message='English not found.')
-            self.status = settings.HTTP_CONSTANTS['NOT_FOUND']
+            EnglishViewSet.status = settings.HTTP_CONSTANTS['NOT_FOUND']
 
-        return Response(response, status=self.status)
+        return Response(response, status=EnglishViewSet.status)

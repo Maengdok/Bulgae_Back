@@ -6,3 +6,6 @@ class English(models.Model):
 
     def __str__(self):
         return "{} • {}".format(self.pk, self.label)
+
+    class Meta:
+        ordering = ['pk']

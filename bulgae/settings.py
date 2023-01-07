@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
+    'rest_framework',
     'hanja.apps.HanjaConfig',
     'korean.apps.KoreanConfig',
     'hanja_korean.apps.HanjaKoreanConfig',

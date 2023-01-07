@@ -1,6 +1,5 @@
 import json
 from django.conf import settings
-from django.http import HttpResponse
 
 from rest_framework.decorators import api_view, schema, action
 from rest_framework.response import Response
@@ -43,6 +42,7 @@ class EnglishViewSet(ViewSet):
         methods=['POST'],
         tags=['English'],
         operation_description="Add english",
+        request_body=EnglishSerializer,
         responses=add_english_schema()
     )
     @parser_classes([JSONParser])
@@ -68,6 +68,7 @@ class EnglishViewSet(ViewSet):
         methods=['PUT'],
         tags=['English'],
         operation_description="Update english",
+        request_body=EnglishSerializer,
         responses=update_english_schema()
     )
     @api_view(['PUT'])

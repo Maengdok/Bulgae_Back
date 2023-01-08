@@ -1,10 +1,10 @@
 from drf_yasg import openapi
 
 
-def get_english_list_schema():
+def get_french_list_schema():
     return {
         200: openapi.Response(
-            description='English list found.',
+            description='French list found.',
             examples=
             {
                 'application/json':
@@ -34,10 +34,10 @@ def get_english_list_schema():
     }
 
 
-def get_english_schema():
+def get_french_schema():
     return {
         200: openapi.Response(
-            description='English found.',
+            description='French found.',
             examples=
             {
                 'application/json':
@@ -61,7 +61,7 @@ def get_english_schema():
                 {
                     'code': 404,
                     'result': 'Not Found',
-                    'message': 'English has not been found',
+                    'message': 'French has not been found',
                     'data': 'null',
                 },
             }
@@ -79,10 +79,10 @@ def get_english_schema():
     }
 
 
-def add_english_schema():
+def add_french_schema():
     return {
         201: openapi.Response(
-            description='English created successfully.',
+            description='French created successfully.',
             examples=
             {
                 'application/json':
@@ -124,10 +124,10 @@ def add_english_schema():
     }
 
 
-def update_english_schema():
+def update_french_schema():
     return {
         200: openapi.Response(
-            description='English updated successfully.',
+            description='French updated successfully.',
             examples=
             {
                 'application/json':
@@ -151,7 +151,7 @@ def update_english_schema():
                     {
                         'code': 404,
                         'result': 'Not Found',
-                        'message': 'English has not been found',
+                        'message': 'French has not been found',
                         'data': 'null',
                     },
             }
@@ -182,10 +182,10 @@ def update_english_schema():
     }
 
 
-def delete_english_schema():
+def delete_french_schema():
     return {
         200: openapi.Response(
-            description='English deleted successfully.',
+            description='French deleted successfully.',
             examples=
             {
                 'application/json':
@@ -210,7 +210,7 @@ def delete_english_schema():
                     {
                         'code': 404,
                         'result': 'Not Found',
-                        'message': 'English has not been found',
+                        'message': 'French has not been found',
                         'data': 'null',
                     },
             }

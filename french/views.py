@@ -17,7 +17,12 @@ from .schemas import get_french_schema, get_french_list_schema, add_french_schem
 class FrenchViewSet(ViewSet):
     status = settings.HTTP_CONSTANTS['SUCCESS']
 
-    @swagger_auto_schema(methods=['GET'], tags=['French'], operation_description="Get french", responses=get_french_list_schema())
+    @swagger_auto_schema(
+        methods=['GET'],
+        tags=['French'],
+        operation_description="Get french",
+        responses=get_french_list_schema()
+    )
     @api_view(['GET'])
     def french_list(self):
         queryset = French.objects.all()
@@ -25,7 +30,12 @@ class FrenchViewSet(ViewSet):
         response = json_normalizer(data=serializer.data)
         return Response(response, status=FrenchViewSet.status)
 
-    @swagger_auto_schema(methods=['GET'], tags=['French'], operation_description="Get french", responses=get_french_schema())
+    @swagger_auto_schema(
+        methods=['GET'],
+        tags=['French'],
+        operation_description="Get french",
+        responses=get_french_schema()
+    )
     @api_view(['GET'])
     def get_french(self, french_id):
         try:
